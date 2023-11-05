@@ -1,25 +1,27 @@
-import 'dotenv/config'
-import { existsSync, writeFileSync } from 'node:fs'
 import { argv, env } from 'node:process'
-import { ImapClient } from './ImapClient.js'
+import dotenv from 'dotenv'
+import { hideBin } from 'yargs/helpers'
+import yargs from 'yargs'
 
 async function main() {
-  const config = {
+  const args = yargs(hideBin(argv))
+    .option('from', { describe: 'Email address to search for' })
+    .option('envPath', { describe: 'Environment path' })
+    .parse()
+
+  if (args.envPath)
+    dotenv.config({ path: args.envPath })
+  else
+    dotenv.config()
+
+  const imapConfig = {
     host: env.IMAP_HOST,
     port: env.IMAP_PORT,
     user: env.IMAP_USER,
     password: env.IMAP_PASSWORD,
   }
 
-  const client = new ImapClient(config)
-
-  const searchQuery = { from: argv[2] }
-  const messages = await client.fetch(searchQuery)
-  for (const { title, text } of messages) {
-    const filePath = `${title}.md`
-    if (!existsSync(filePath))
-      writeFileSync(filePath, text)
-  }
+  await fetchAndBackupEmail({ imapConfig, searchQuery: { from: args.from } })
 }
 
 main().catch(console.error)
