@@ -2,11 +2,13 @@ import { argv, env } from 'node:process'
 import dotenv from 'dotenv'
 import { hideBin } from 'yargs/helpers'
 import yargs from 'yargs'
+import { fetchAndBackupEmail } from './fetch-and-backup-email.js'
 
 async function main() {
   const args = yargs(hideBin(argv))
-    .option('from', { describe: 'Email address to search for' })
     .option('envPath', { describe: 'Environment path' })
+    .option('from', { describe: 'Email address to search for' })
+    .option('output', { describe: 'Backup Dir path' })
     .parse()
 
   if (args.envPath)
@@ -21,7 +23,7 @@ async function main() {
     password: env.IMAP_PASSWORD,
   }
 
-  await fetchAndBackupEmail({ imapConfig, searchQuery: { from: args.from } })
+  await fetchAndBackupEmail({ imapConfig, searchQuery: { from: args.from }, output: args.output })
 }
 
 main().catch(console.error)
