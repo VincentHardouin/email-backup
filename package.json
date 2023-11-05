@@ -1,7 +1,7 @@
 {
   "name": "email-backup",
   "type": "module",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Back up emails from a mail server to a local directory.",
   "author": "Vincent Hardouin (https://github.com/VincentHardouin)",
   "repository": "https://github.com/VincentHardouin/email-backup",
