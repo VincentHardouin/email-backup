@@ -6,6 +6,7 @@
   "author": "",
   "license": "ISC",
   "keywords": [],
+  "bin": "./src/index.js",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

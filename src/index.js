@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { argv, env } from 'node:process'
 import dotenv from 'dotenv'
 import { hideBin } from 'yargs/helpers'
