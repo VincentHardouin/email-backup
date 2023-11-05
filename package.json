@@ -2,10 +2,17 @@
   "name": "email-backup",
   "type": "module",
   "version": "1.0.0",
-  "description": "",
-  "author": "",
+  "description": "Back up emails from a mail server to a local directory.",
+  "author": "Vincent Hardouin (https://github.com/VincentHardouin)",
+  "repository": "https://github.com/VincentHardouin/email-backup",
+  "homepage": "https://github.com/VincentHardouin/email-backup#readme",
+  "bugs": "https://github.com/VincentHardouin/email-backup/issues",
   "license": "ISC",
-  "keywords": [],
+  "keywords": [
+    "email",
+    "imap",
+    "backup"
+  ],
   "bin": "./src/index.js",
   "files": [
     "src"
