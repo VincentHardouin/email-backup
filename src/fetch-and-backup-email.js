@@ -1,6 +1,5 @@
 import { access, constants, writeFile } from 'node:fs/promises'
-import { cwd } from 'node:process'
-import { join, resolve } from 'node:path'
+import { isAbsolute, join, resolve } from 'node:path'
 import { ImapClient } from './ImapClient.js'
 
 export async function fetchAndBackupEmail({ imapConfig, searchQuery, output }) {
@@ -12,11 +11,13 @@ export async function fetchAndBackupEmail({ imapConfig, searchQuery, output }) {
 }
 
 async function _saveIfNotExist(mail, output) {
-  const filePath = resolve(cwd(), join(output, `/${mail.title}.md`))
+  const fileName = `${mail.title}.md`
+  const filePath = join(output, `/${fileName}`)
+  const absolutePath = isAbsolute(output) ? filePath : resolve(filePath)
   try {
-    await access(filePath, constants.F_OK)
+    await access(absolutePath, constants.F_OK)
   }
   catch (e) {
-    await writeFile(filePath, mail.text)
+    await writeFile(absolutePath, mail.text)
   }
 }
